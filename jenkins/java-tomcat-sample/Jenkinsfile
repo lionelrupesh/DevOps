@@ -14,11 +14,6 @@ pipeline {
                     archiveArtifacts artifacts: '**/*.war'
                 }
             }
-        } 
-        stage('Deploy to Stagging env') {
-            steps{
-                build 'DeploytoStag'
-            }
         }   
         stage('Create Tomcat Image') {
             agent {
