@@ -20,7 +20,6 @@ pipeline {
                 build 'DeploytoStag'
             }
         }   
-    }
         stage('Create Tomcat Image') {
             agent {
                 label 'test-node'
