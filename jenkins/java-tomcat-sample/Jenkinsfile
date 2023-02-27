@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'built-in-node'
+    }
     stages {
         stage('Build') {
             steps {
@@ -18,5 +20,20 @@ pipeline {
                 build 'DeploytoStag'
             }
         }   
+    }
+        stage('Create Tomcat Image') {
+            agent {
+                label 'test-node'
+            }
+            steps {
+                copyArtifacts filter: '**/*.war', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
+                echo "Building docker image"
+                sh '''
+                original_pwd=$(pwd -P)
+                cd jenkins/java-tomcat-sample
+                docker build -t localtomcatimg:$BUILD_NUMBER .
+                cd $original_pwd
+                sh '''
+            }
     }
 }
