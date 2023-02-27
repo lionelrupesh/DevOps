@@ -35,5 +35,6 @@ pipeline {
                 cd $original_pwd
                 sh '''
             }
+        }
     }
 }
