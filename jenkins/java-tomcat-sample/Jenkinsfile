@@ -43,5 +43,21 @@ pipeline {
                 sh '''
             }
         }
+        stage('Deploy Production Environment') {
+            agent {
+                label 'test-node'
+            }
+            steps {
+                timeout(time:5, unit:'MINUTES'){
+                input message:'Approve PRODUCTION Deployment?'
+                }
+                echo "Running app on Prod env"
+                sh '''
+                docker stop tomcatInstanceProd || true
+                docker rm tomcatInstanceProd || true
+                docker run -itd --name tomcatInstanceProd -p 8083:8080 localtomcatimg:$BUILD_NUMBER
+                '''
+            }
+        }
     }
 }
