@@ -4,7 +4,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building the code"
-                cd ./docker/docker-examples
                 dir('./docker/docker-examples/')
                 sh 'docker image build -t suryaraj/devops-evening:v1.$BUILD_NUMBER .'
             }
