@@ -23,7 +23,6 @@ pipeline {
             }
         }    
     }
-}
 post {
     always {
         echo "We are in the post stage"
@@ -35,4 +34,5 @@ post {
         echo "Job ran successfully"
         sh 'docker push suryaraj/devops-evening:v1.$BUILD_NUMBER'
     }
+}
 }
