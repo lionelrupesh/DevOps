@@ -14,9 +14,7 @@ pipeline {
             	  }
        	   }
         stage('Create Tomcat Image') {
-            agent {
-                label 'any'
-            }
+            agent any
             steps {
                 copyArtifacts filter: '**/*.war', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
                 echo "Building docker image"
