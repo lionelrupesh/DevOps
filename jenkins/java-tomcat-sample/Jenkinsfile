@@ -1,1 +1,10 @@
-
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo "Building the code"
+                sh 'mvn -f jenkins/java-tomcat-sample/pom.xml clean package'
+            }
+}
+}
