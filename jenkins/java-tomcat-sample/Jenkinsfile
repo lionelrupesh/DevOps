@@ -33,5 +33,15 @@ pipeline {
                 sh '''
             }
         }
+        stage('Deploy to Prod') {
+            steps {
+                echo "Runnning in Prod env"
+                sh '''
+                docker container stop tomcatprodenv || true
+                docker container rm tomcatprodenv || true
+                docker run -itd --name tomcatprodenv -p 8085:8080 localtomcatimg:$BUILD_NUMBER
+                sh '''
+            }
+        }
     }
 }
