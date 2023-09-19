@@ -27,6 +27,8 @@ pipeline {
             steps {
                 echo "Runnning in stagging env"
                 sh '''
+                docker container stop tomcatstagingenv || true
+                docker container rm tomcatstagingenv || true
                 docker run -itd --name tomcatstagingenv -p 8085:8080 localtomcatimg:$BUILD_NUMBER
                 sh '''
             }
