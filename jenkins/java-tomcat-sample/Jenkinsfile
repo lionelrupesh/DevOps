@@ -39,7 +39,7 @@ pipeline {
                 sh '''
                 docker container stop tomcatprodenv || true
                 docker container rm tomcatprodenv || true
-                docker run -itd --name tomcatprodenv -p 8085:8080 localtomcatimg:$BUILD_NUMBER
+                docker run -itd --name tomcatprodenv -p 8086:8080 localtomcatimg:$BUILD_NUMBER
                 sh '''
             }
         }
