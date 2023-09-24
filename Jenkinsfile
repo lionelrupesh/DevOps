@@ -1,26 +1,25 @@
 pipeline {
     agent any
+
     stages {
-        stage('UnitTest') {
+        stage('Deploy to Staging') {
             steps {
-                echo "Hello, we are learning Jekins pipeline as a code"
-                echo "Running Unitest"
+                script {
+                    def containerName = 'staginginstance'
+                    def isContainerRunning = sh(script: "docker ps -q -f name=${containerName}", returnStatus: true) == 0
+
+                    if (isContainerRunning) {
+                        echo "Stopping and removing the '${containerName}' container..."
+                        // Stop the container
+                        sh "docker stop ${containerName}"
+                        // Remove the container
+                        sh "docker rm ${containerName}"
+                        echo "Container '${containerName}' has been stopped and removed."
+                    } else {
+                        echo "Container '${containerName}' is not running."
+                    }
+                }
             }
         }
-        stage('Build') {
-            steps {
-                echo "Building the code"
-            }
-        }
-        stage('DeployStaging') {
-            steps {
-                echo "Deploying to staging env"
-            }
-        }  
-        stage('DeployProd') {
-            steps {
-                echo "Deploying to prod env"
-            }
-        }    
     }
 }
