@@ -18,6 +18,8 @@ pipeline {
                     } else {
                         echo "Container '${containerName}' is not running."
                     }
+                    // Create new container
+                    sh "docker container run -itd --name staginginstance localtomcatimg:$BUILD_BUMBER"
                 }
             }
         }
