@@ -19,7 +19,7 @@ pipeline {
                         echo "Container '${containerName}' is not running."
                     }
                     // Create new container
-                    sh "docker container run -itd --name staginginstance localtomcatimg:$BUILD_BUMBER"
+                    sh "docker container run -itd --name staginginstance localtomcatimg:$BUILD_NUMBER"
                 }
             }
         }
