@@ -1,9 +1,15 @@
 pipeline {
   agent any
   stages {
-    stage('UnitTest') {
+    stage('Build Application') {
       steps {
-        echo "Hello, We are inside unittest, running unit test"
+        sh 'mvn -f jenkins/java-tomcat-sample/pom.xml clean package'
+      }
+      post {
+        success {
+          echo "We are archiving artifact"
+          archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+        }
       }
      }
     stage('Build'){
