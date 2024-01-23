@@ -28,6 +28,8 @@ pipeline {
       steps {
         echo "We are deploying the app"
         sh '''
+        docker container stop tomcatlocalinstance || true
+        docker container rm tomcatlocalinstance || true
         docker container run -itd --name tomcatlocalinstance -p 8083:8080 localtomcatimg:$BUILD_NUMBER
         sh '''
       }
