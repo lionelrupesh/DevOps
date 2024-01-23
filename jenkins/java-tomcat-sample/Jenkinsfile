@@ -24,13 +24,23 @@ pipeline {
         sh '''
       }
      }
-    stage('Deploy Maven App'){
+    stage('Deploy in QA instance'){
       steps {
         echo "We are deploying the app"
         sh '''
         docker container stop tomcatlocalinstance || true
         docker container rm tomcatlocalinstance || true
         docker container run -itd --name tomcatlocalinstance -p 8083:8080 localtomcatimg:$BUILD_NUMBER
+        sh '''
+      }
+     }
+     stage('Deploy in stagging instance'){
+      steps {
+        echo "We are deploying the app"
+        sh '''
+        docker container stop tomcatstagginginstance || true
+        docker container rm tomcatstagginginstance || true
+        docker container run -itd --name tomcatstagginginstance -p 8084:8080 localtomcatimg:$BUILD_NUMBER
         sh '''
       }
      }
