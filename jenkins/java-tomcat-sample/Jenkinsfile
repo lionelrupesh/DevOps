@@ -12,9 +12,16 @@ pipeline {
         }
       }
      }
-    stage('Build'){
+    stage('CreateTomcatImage') {
       steps {
-        echo "We are inside build stage, building the code now"
+        copyArtifacts filter: '**/*.war', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: lastSuccessful()
+        echo "Building docker image"
+        sh '''
+        original_pwd=$(pwd-P)
+        cd jenkins/java-tomcat-sample
+        docker build -t localtomcatimg:$BUILD_NUMBER .
+        cd $jenkins/java-tomcat-sample
+        sh '''
       }
      }
     stage('Deploy'){
