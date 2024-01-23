@@ -24,9 +24,12 @@ pipeline {
         sh '''
       }
      }
-    stage('Deploy'){
+    stage('Deploy Maven App'){
       steps {
         echo "We are deploying the app"
+        sh '''
+        docker container run -itd --name tomcatlocalinstance -p 8083:8080 localtomcatimg:$BUILD_NUMBER
+        sh '''
       }
      }
    }
